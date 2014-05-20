@@ -47,7 +47,7 @@ key=gets.chomp
 
 #unfavourites stuff with OOTD
 client.favorites.each do |fav|
-	if fav.text.downcase.index('#selfie')
+	if fav.text.downcase.index('#ootd')
 		client.unfavorite(fav.id)
 	end
 end
