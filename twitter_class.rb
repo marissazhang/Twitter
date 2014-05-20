@@ -8,6 +8,7 @@ class UnFav
 		  config.consumer_secret     = "consumer secret here"
 		  config.access_token        = "access token here"
 		  config.access_token_secret = "access token secret here"
+		  end
 	end
 
 	def show_favs
