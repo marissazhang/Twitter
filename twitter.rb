@@ -1,10 +1,10 @@
 require 'twitter'
 
 		client = Twitter::REST::Client.new do |config|
-		  config.consumer_key        = "1O4wWwGpfxggu5VhxfDKYhXWo"
-		  config.consumer_secret     = "KPqjl3D0mmruau40MiGC93SkCIXKrMDLYolC8e2cOp4H6LtxwX"
-		  config.access_token        = "2497111788-o3BPjp1P2MEvuYfDpdlgfEwfMSkcvocNSCAjjAf"
-		  config.access_token_secret = "s2eyfK3alMBVa6UlaCyjdvTsReQJjsEXOfEVXORHEpHqt"
+		  config.consumer_key        = "consumer key here"
+		  config.consumer_secret     = "consumer secret here"
+		  config.access_token        = "access token here"
+		  config.access_token_secret = "access token secret here"
 		end
 
 for fav in client.favorites
