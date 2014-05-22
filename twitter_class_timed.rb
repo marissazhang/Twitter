@@ -8,70 +8,56 @@ require 'twitter'
 
 class UnFav
 
-	def initialize
+	def initialize(tokens)
 		@client = Twitter::REST::Client.new do |config|
-			config.consumer_key        = "1O4wWwGpfxggu5VhxfDKYhXWo"
-			config.consumer_secret     = "KPqjl3D0mmruau40MiGC93SkCIXKrMDLYolC8e2cOp4H6LtxwX"
-			config.access_token        = "2497111788-o3BPjp1P2MEvuYfDpdlgfEwfMSkcvocNSCAjjAf"
-			config.access_token_secret = "s2eyfK3alMBVa6UlaCyjdvTsReQJjsEXOfEVXORHEpHqt"
+			config.consumer_key        = tokens[:consumer_key]
+			config.consumer_secret     = tokens[:consumer_secret]
+			config.access_token        = tokens[:access_token]
+			config.access_token_secret = tokens[:access_token_secret]
+		end
+
+		@last_id = nil
+		@favs = []
+		@count = 3
+	end
+
+	def get_favs
+		if @last_id
+			@favs = @client.favorites(count: @count, max_id: @last_id)
+		else
+			@favs = @client.favorites(count: @count)
+		end
+		@last_id = @favs.last.id
+		puts "last_id: #{@last_id}"
+		puts "favs size: #{@favs.length}"
+	end
+
+	def remove_favs(tag)
+		@favs.each do |fav|
+			@client.unfavorite(fav.id) if fav.text.downcase.index(tag)
+			puts "Removed: #{fav.id}"
 		end
 	end
 
-
-	def run
-		count=0
-		for fav in @client.favorites(count: 3)
-			puts fav.id
-			if fav.text.downcase.index('#ootd')
-				@client.unfavorite(fav.id)
-			end
-			count+=1
-			if count==3
-				maxkey=fav.id
-			end
+	def remove_all_favs(tag)
+		get_favs
+		if @favs.length == @count
+			remove_favs(tag)
+			remove_all_favs(tag)
+		else
+			puts "Going to sleep"
+			sleep 1 * 60 * 15
+			remove_all_favs
 		end
-
-		puts "#{maxkey}!!!!"
-
-		edit_favs(maxkey)
-
-	end
-
-
-
-	def edit_favs(newmax)
-
-		if @client.favorites(count: 3, max_id: newmax).length != 3 
-			puts 'returning 0'
-			return 0
-		end
-		count=0
-		for fav in @client.favorites(count: 3, max_id: newmax)
-			puts fav.id
-			if fav.text.downcase.index('#ootd')
-				@client.unfavorite(fav.id)
-			end
-			count+=1
-			if count==3
-				maxkey=fav.id
-			end
-		end
-
-		puts "#{maxkey}!!!!"
-		return maxkey
 	end
 
 end
 
-sk=UnFav.new
-newkey=sk.run
+tokens = {
+	consumer_key: "1O4wWwGpfxggu5VhxfDKYhXWo",
+	consumer_secret: "KPqjl3D0mmruau40MiGC93SkCIXKrMDLYolC8e2cOp4H6LtxwX",
+	access_token: "2497111788-o3BPjp1P2MEvuYfDpdlgfEwfMSkcvocNSCAjjAf",
+	access_token_secret: "s2eyfK3alMBVa6UlaCyjdvTsReQJjsEXOfEVXORHEpHqt"
+}
 
-done=false
-while done==false do
-	newkey=sk.edit_favs(newkey)
-		if newkey==0
-			done=true
-		break
-		sleep 1*60*60
-	end
-end
+UnFav.new(tokens).remove_all_favs('#ootd')
