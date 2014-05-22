@@ -41,13 +41,17 @@ class UnFav
 
 	def remove_all_favs(tag)
 		get_favs
-		if @favs.length == @count
-			remove_favs(tag)
-			remove_all_favs(tag)
-		else
+		begin
+			if @favs.length == @count
+				remove_favs(tag)
+				remove_all_favs(tag)
+			else
+				puts "Finished!"
+			end
+		rescue
 			puts "Going to sleep"
 			sleep 1 * 60 * 15
-			remove_all_favs
+			remove_all_favs(tag)
 		end
 	end
 
