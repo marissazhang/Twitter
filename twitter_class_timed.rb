@@ -58,10 +58,9 @@ class UnFav
 end
 
 tokens = {
-	consumer_key: "1O4wWwGpfxggu5VhxfDKYhXWo",
-	consumer_secret: "KPqjl3D0mmruau40MiGC93SkCIXKrMDLYolC8e2cOp4H6LtxwX",
-	access_token: "2497111788-o3BPjp1P2MEvuYfDpdlgfEwfMSkcvocNSCAjjAf",
-	access_token_secret: "s2eyfK3alMBVa6UlaCyjdvTsReQJjsEXOfEVXORHEpHqt"
-}
+	consumer_key: "consumer key here",
+	consumer_secret: "consumer secret here",
+	access_token: "access token here",
+	access_token_secret: "access token secret here"
 
 UnFav.new(tokens).remove_all_favs('#ootd')
