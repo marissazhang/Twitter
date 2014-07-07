@@ -56,5 +56,6 @@ tokens = {
 	consumer_secret: "consumer secret here",
 	access_token: "access token here",
 	access_token_secret: "access token secret here"
+}
 
 UnFav.new(tokens).remove_all_favs('#ootd')
