@@ -1,11 +1,5 @@
 require 'twitter'
 
-#getting the list of favourites has a rate limit of 15 requests per 15 minutes. 1 request/minute
-#unfavouriting has a rate limit of ? (same thing??????)
-#gotta figure out how to find and display the rate limit
-#each time you use the API for a specific thing its one iteration of calling the API. if you call it to display 200 tweets its only 1 use of the API
-#if you call the API for seperate things they're all considered different counts
-
 class UnFav
 
 	def initialize(tokens)
